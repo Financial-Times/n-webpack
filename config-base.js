@@ -1,6 +1,7 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BowerWebpackPlugin = require('bower-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const path = require('path');
 
 module.exports = () => {
 	return {
@@ -47,38 +48,16 @@ module.exports = () => {
 			}) ];
 		},
 
-		plugins: (() => {
-			const plugins = [
-				new BowerWebpackPlugin({ includes: /\.js$/, modulesDirectories: path.resolve('./bower_components') }),
-				new ExtractTextPlugin('[name]'),
-			];
+		plugins: [
+			new BowerWebpackPlugin({ includes: /\.js$/, modulesDirectories: path.resolve('./bower_components') }),
+			new ExtractTextPlugin('[name]'),
+		],
 
-
-			return plugins;
-		})(),
 		resolve: {
 			root: [
 				path.resolve('./bower_components'),
 				path.resolve('./node_modules')
-			],
-			alias: (() => {
-				if (packageJson.dependencies['preact-compat']) {
-					return {
-						'react': 'preact-compat',
-						'react-dom': 'preact-compat'
-					};
-				}
-			})()
+			]
 		}
 	};
 }
-
-
-
-
-		if (opts.withSass) {
-
-		}
-
-
-

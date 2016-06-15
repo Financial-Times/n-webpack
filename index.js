@@ -2,42 +2,23 @@
 
 const path = require('path');
 const packageJson = require(path.join(process.cwd(),'package.json'));
-
-function AssetHashesPlugin() {
-	const fs = require('fs');
-	const crypto = require('crypto');
-
-	return function () {
-		this.plugin('done', stats => {
-			const hashable = Object.keys(stats.compilation.assets)
-				.filter(asset => !/\.map$/.test(asset))
-				.map(fullPath => {
-					const name = path.basename(fullPath);
-					const file = fs.readFileSync(fullPath, 'utf8');
-					const hash = crypto.createHash('sha1').update(file).digest('hex');
-					const hashedName = `${hash.substring(0, 8)}/${name}`;
-
-					return { name, hashedName };
-				})
-				.reduce((previous, current) => {
-					previous[current.name] = current.hashedName;
-					previous[current.name + '.map'] = current.hashedName + '.map';
-					return previous;
-				}, {});
-
-			fs.writeFileSync('./public/asset-hashes.json', JSON.stringify(hashable, undefined, 2), { encoding: 'UTF8' });
-		});
-	};
-}
+const EntryWrap = require('./addons/entry-wrap');
+const AssetHashes = require('./addons/asset-hashes');
 
 function hasReact () {
 	return packageJson.dependencies.react || packageJson.dependencies['preact-compat'];
+}
+
+function hasPreact () {
+	return packageJson.dependencies['preact-compat'];
 }
 
 
 class Configurator {
 	constructor (options) {
 		this.opts = options;
+		this.handleReact = ('withReact' in this.opts) ? this.opts.withReact : hasReact();
+		this.ECMAScriptVersion = ('ECMAScriptVersion' in this.opts) ? this.opts.ECMAScriptVersion : '5';
 		this.depErrors = {
 			prod: [],
 			dev: []
@@ -47,19 +28,14 @@ class Configurator {
 	}
 
 	checkDependencies () {
-		this.checkDependency('webpack');
-		this.checkDependency('extract-text-webpack-plugin');
-		this.checkDependency('bower-webpack-plugin');
-		this.checkDependency('autoprefixer');
-		this.checkDependency('babel-loader');
 		this.checkDependency('babel-plugin-add-module-exports', true);
 		this.checkDependency('babel-plugin-transform-runtime', true);
-		if (this.opts.withHeadCss) {
-			this.checkDependency('extract-css-block-webpack-plugin');
+		if (this.handleReact) {
+			this.checkDependency('babel-preset-react', true);
 		}
-		const ECMAScriptVersion = ('ECMAScriptVersion' in this.opts) ? this.opts.ECMAScriptVersion : '5';
 
-		if (ECMAScriptVersion <= 5) {
+
+		if (this.ECMAScriptVersion <= 5) {
 			this.checkDependency('babel-preset-es2015', true);
 			this.checkDependency('babel-plugin-transform-es2015-classes', true);
 		}
@@ -96,8 +72,9 @@ class Configurator {
 		this.config.output = this.opts.output || {filename: '[name]'};
 
 		if (this.opts.externals) {
-			if ('n-ui' in externals) {
-				this.config.externals = Object.assign({}, this.opts.externals, require(path.join(process.cwd(), 'bower_components/n-ui/_entry')()));
+			if ('n-ui' in this.opts.externals) {
+				const nUiEntry = path.join(process.cwd(), 'bower_components/n-ui/_entry');
+				this.config.externals = Object.assign({}, this.opts.externals, require(nUiEntry)());
 			} else {
 				this.config.externals = Object.assign({}, this.opts.externals);
 			}
@@ -114,42 +91,34 @@ class Configurator {
 			this.config.plugins.push(new ExtractCssBlockPlugin({ match: /main\.css$/ }))
 		}
 
+		if (this.opts.externals['n-ui']) {
+
+		  this.config.plugins.push(
+		  	new EntryWrap(
+		      '(function(){function init(){\n',
+		      '\n};window.ftNextnUiLoaded ? init() : document.addEventListener(\'ftNextnUiLoaded\', init);})();',
+		  		{ match: /public\/main\.js$/ }
+		    )
+	    );
+		}
+
 		if (process.argv.indexOf('--dev') === -1) {
 			const webpack = require('webpack');
 			this.config.plugins.push(new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } }));
 			this.config.plugins.push(new webpack.optimize.UglifyJsPlugin({ 'compress': { 'warnings': false } }));
 			if (this.opts.withHashedAssets === true) {
-				this.config.plugins.push(new AssetHashesPlugin());
+				this.config.plugins.push(new AssetHashes());
 			}
 		}
 
+		if (this.handleReact && hasPreact()) {
+			this.config.resolve.alias = {
+				'react': 'preact-compat',
+				'react-dom': 'preact-compat'
+			};
+		}
 
-
-// const enhancedEntryPoints = Object.assign({}, config.assets.entry);
-// delete enhancedEntryPoints['./public/main-core.js'];
-// const configs = [Object.assign({}, configBase, { entry: enhancedEntryPoints })];
-
-// // if there's a `main-core.js` entry, create config for 'core' browsers
-// // NOTE: bit hard-coded this. when the assets names/locations settle down, maybe make n-makefile.json not as explicit,
-// // e.g. `css: ['main', 'ie8'], js: ['enhanced', 'core']
-// const coreJsOutput = './public/main-core.js';
-// const coreJsEntryPoint = config.assets.entry[coreJsOutput];
-// if (coreJsEntryPoint) {
-// 	const coreLoaders = configBase.module.loaders.slice();
-// 	coreLoaders.unshift({
-// 		test: /\.js$/,
-// 		loader: require.resolve('es3ify-loader')
-// 	});
-// 	configs.push(Object.assign({}, configBase, {
-// 		entry: { [coreJsOutput]: coreJsEntryPoint },
-// 		module: { loaders: coreLoaders }
-// 	}));
-// }
-
-// module.exports = configs;
-
-
-
+		return this.config;
 	}
 
 	setUpBabel(config, opts) {
@@ -172,33 +141,28 @@ class Configurator {
 			}
 		};
 
-		if (this.opts.assets.includes) {
-			this.opts.assets.includes.forEach(
+		if (this.opts.includes) {
+			this.opts.includes.forEach(
 				path => babelConfig.include.push(new RegExp(path))
 			);
 		}
 
-
 		if (this.opts.withBabelPolyfills) {
 			babelConfig.query.plugins.push(require.resolve('babel-plugin-transform-runtime'));
 		} else {
-			babelConfig.query.plugins.push([require.resolve('babel-plugin-transform-runtime'), {polyfills: false}]);
+			babelConfig.query.plugins.push([require.resolve('babel-plugin-transform-runtime'), {polyfill: false}]);
 		}
 
-		const handleReact = (withReact in this.opts) ? this.opts.withReact : hasReact();
-
-		if (handleReact) {
+		if (this.handleReact) {
 			this.checkDependency('babel-preset-react', true);
 			babelConfig.query.presets.push(require.resolve('babel-preset-react'))
 		}
 
-		const ECMAScriptVersion = (ECMAScriptVersion in this.opts) ? this.opts.ECMAScriptVersion : '5';
-
-		if (ECMAScriptVersion <= 5) {
+		if (this.ECMAScriptVersion <= 5) {
 			babelConfig.query.presets.push(require.resolve('babel-preset-es2015'))
 			babelConfig.query.plugins.push([require.resolve('babel-plugin-transform-es2015-classes'), { loose: true }])
 		}
-		this.config.loaders.unshift(babelConfig);
+		this.config.module.loaders.unshift(babelConfig);
 	}
 }
 
