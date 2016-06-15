@@ -89,7 +89,7 @@ class Configurator {
 			this.config.plugins.push(new ExtractCssBlockPlugin({ match: /main\.css$/ }))
 		}
 
-		if (this.opts.externals['n-ui']) {
+		if (this.opts.externals && this.opts.externals['n-ui']) {
 
 			this.config.plugins.push(
 				new EntryWrap(
