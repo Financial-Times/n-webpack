@@ -93,13 +93,13 @@ class Configurator {
 
 		if (this.opts.externals['n-ui']) {
 
-		  this.config.plugins.push(
-		  	new EntryWrap(
-		      '(function(){function init(){\n',
-		      '\n};window.ftNextnUiLoaded ? init() : document.addEventListener(\'ftNextnUiLoaded\', init);})();',
-		  		{ match: /public\/main\.js$/ }
-		    )
-	    );
+			this.config.plugins.push(
+				new EntryWrap(
+					'(function(){function init(){\n',
+					'\n};window.ftNextnUiLoaded ? init() : document.addEventListener(\'ftNextnUiLoaded\', init);})();',
+					{ match: /public\/main\.js$/ }
+				)
+			);
 		}
 
 		if (process.argv.indexOf('--dev') === -1) {
@@ -109,6 +109,16 @@ class Configurator {
 			if (this.opts.withHashedAssets === true) {
 				this.config.plugins.push(new AssetHashes());
 			}
+		}
+
+		if (this.opts.wrap) {
+			this.config.plugins.push(
+				new EntryWrap(
+					this.opts.wrap.before || '',
+					this.opts.wrap.after || '',
+					this.opts.wrap.options
+				)
+			);
 		}
 
 		if (this.handleReact && hasPreact()) {
