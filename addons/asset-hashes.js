@@ -1,7 +1,8 @@
 const path = require('path');
-function AssetHashes() {
-	const fs = require('fs');
-	const crypto = require('crypto');
+const fs = require('fs');
+const crypto = require('crypto');
+
+function AssetHashes () {
 
 	return function () {
 		this.plugin('done', stats => {

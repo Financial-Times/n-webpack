@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 const packageJson = require(path.join(process.cwd(),'package.json'));
 const EntryWrap = require('./addons/entry-wrap');
@@ -52,14 +50,14 @@ class Configurator {
 		}
 	}
 
-	outputDepErrors ()  {
+	outputDepErrors () {
 		if (this.depErrors.prod.length) {
-			console.error('Missing production dependencies')
-			console.error(`Run \`npm install -S ${this.depErrors.prod.join(' ')}\``);
+			console.error('Missing production dependencies'); //eslint-disable-line
+			console.error(`Run \`npm install -S ${this.depErrors.prod.join(' ')}\``); //eslint-disable-line
 		}
 		if (this.depErrors.dev.length) {
-			console.error('Missing dev dependencies')
-			console.error(`Run \`npm install -D ${this.depErrors.dev.join(' ')}\``);
+			console.error('Missing dev dependencies'); //eslint-disable-line
+			console.error(`Run \`npm install -D ${this.depErrors.dev.join(' ')}\``); //eslint-disable-line
 		}
 
 		if (this.depErrors.prod.length || this.depErrors.dev.length) {
@@ -131,7 +129,7 @@ class Configurator {
 		return this.config;
 	}
 
-	setUpBabel(config, opts) {
+	setUpBabel () {
 
 		const babelConfig = {
 			test: /\.js$/,
@@ -176,6 +174,6 @@ class Configurator {
 	}
 }
 
-module.exports = function buildConfig(options) {
+module.exports = function buildConfig (options) {
 	return new Configurator(options).exec();
 }
