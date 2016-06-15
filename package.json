@@ -1,6 +1,6 @@
 {
 	"name": "@financial-times/n-webpack",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"description": "Build the webpack.config.js of your dreams :relaxed:",
 	"main": "index.js",
 	"dependencies": {
