@@ -17,3 +17,4 @@ exports a function accepting the following options:
 - `excludes|exclude`: Array of files/directories/globs to exclude from babelification
 - `output`: options passed in to webpack output. default `{filename: '[name]'}`
 - `wrap`: {before, after, options} strings to insert before and after the generated content. options is an optional object containing a regex `match` to select which output files to apply to
+- `env`: prod or dev, to force dev or prod build
