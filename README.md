@@ -18,3 +18,4 @@ exports a function accepting the following options:
 - `output`: options passed in to webpack output. default `{filename: '[name]'}`
 - `wrap`: {before, after, options} strings to insert before and after the generated content. options is an optional object containing a regex `match` to select which output files to apply to
 - `env`: prod or dev, to force dev or prod build
+- `outputStats`: a filename to output stats about the build to
