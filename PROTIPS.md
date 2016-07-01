@@ -8,3 +8,5 @@ Assign your bundle's output to a global variable by passing in something like th
 	library: 'myVariableName'
 }
 ```
+- - -
+Add `outputStats: 'myStatsFile.json'` to your options to generate information about your bundle(s). This can then be analysed at http://webpack.github.io/analyse/
