@@ -3,7 +3,7 @@ machine:
     version: 5.0.0
 deployment:
   release:
-    tag: /^v/
+    tag: /v.*/
     owner: Financial-Times
     commands:
       - make npm-publish
