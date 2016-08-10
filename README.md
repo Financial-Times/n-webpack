@@ -21,4 +21,4 @@ exports a function accepting the following options:
 - `outputStats`: a filename to output stats about the build to
 
 
-If `true` is passed in as the second parameter ana rray of webpack configs will be created, one for each of the growing number of asset variants required by next applications.
+If `true` is passed in as the second parameter ana rray of webpack configs will be created, one for each of the growing number of asset variants required by next applications. To exclude certain variants (perhaps becaus eyour app takes care of building them itself) a `{exclude: []}` object can be passed in (see lib/variants.js for string values accepted in exclude)
