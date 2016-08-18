@@ -6,7 +6,7 @@ const variants = require('./lib/variants');
 const protips = require('protips');
 const protipsPaths = [path.join(__dirname, 'PROTIPS.md')];
 const nUiProtipsPath = path.join(process.cwd(), 'bower_components/n-ui', 'PROTIPS.md');
-
+const clone = require('clone');
 if (require('fs').existsSync(nUiProtipsPath)) {
 	protipsPaths.push(nUiProtipsPath);
 }
@@ -15,10 +15,6 @@ protips.apply(protips, protipsPaths);
 
 // verify no wildcards used in /public/ ignore patterns
 VerifyBuild.noWildcard();
-
-function clone (obj) {
-	return JSON.parse(JSON.stringify(obj));
-}
 
 const transforms = [
 	require('./lib/transforms/tweak-options'),
