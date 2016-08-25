@@ -25,7 +25,7 @@ const transforms = [
 	require('./lib/transforms/apply-simple-options'),
 	require('./lib/transforms/babel'),
 	require('./lib/transforms/head-css'),
-	require('./lib/transforms/external-n-ui'),
+	require('./lib/transforms/externals'),
 	require('./lib/transforms/prod'),
 	require('./lib/transforms/preact'),
 	require('./lib/transforms/wrap'),

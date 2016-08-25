@@ -7,6 +7,7 @@ const nWebpack = require(@financial-times/n-webpack');
 exports a function accepting the following options:
 
 - `externals`:  map of requires not to bundle in this file, but rather to look for on the window object (see https://webpack.github.io/docs/library-and-externals.html). `{'n-ui': null}` will be automatically populated with paths to n-ui and its bundled-by-default components
+- `nUiExcludes`: when building a js bundle that defines `n-ui` as an external, this defines a list of module names *not* to require from n-ui, but rather to build from local copies of the components. Generally, use this if you have resolutions in your bower.json
 - `withHeadCss`: default false - will split css into main.css and head.css files
 - `withHashedAssets`: default false - will build a map of hashes for each generated file
 - `withBabelPolyfills`: default true - Includes babel's core-js polyfills in your js bundle
@@ -19,6 +20,7 @@ exports a function accepting the following options:
 - `wrap`: {before, after, options} strings to insert before and after the generated content. options is an optional object containing a regex `match` to select which output files to apply to
 - `env`: prod or dev, to force dev or prod build
 - `outputStats`: a filename to output stats about the build to
+
 
 
 If `true` is passed in as the second parameter ana rray of webpack configs will be created, one for each of the growing number of asset variants required by next applications. To exclude certain variants (perhaps becaus eyour app takes care of building them itself) a `{exclude: []}` object can be passed in (see lib/variants.js for string values accepted in exclude)
