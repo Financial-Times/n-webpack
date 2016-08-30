@@ -24,6 +24,7 @@
     "node-sass": "^3.8.0",
     "postcss-loader": "^0.11.0",
     "protips": "^1.1.0",
+    "raw-loader": "^0.5.1",
     "sass-loader": "^4.0.0",
     "webpack": "^1.13.1",
     "webpack-stats-plugin": "^0.1.1"
