@@ -30,7 +30,8 @@
     "webpack-stats-plugin": "^0.1.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node scripts/symlink-webpack"
   },
   "repository": {
     "type": "git",
@@ -41,9 +42,6 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Financial-Times/n-webpack/issues"
-  },
-  "bin": {
-    "webpack": "./node_modules/.bin/webpack"
   },
   "homepage": "https://github.com/Financial-Times/n-webpack#readme",
   "devDependencies": {
