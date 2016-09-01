@@ -26,12 +26,10 @@
     "protips": "^1.1.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^4.0.0",
-    "webpack": "^1.13.1",
     "webpack-stats-plugin": "^0.1.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "node scripts/symlink-webpack"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
