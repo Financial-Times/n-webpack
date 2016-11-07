@@ -23,6 +23,4 @@ exports a function accepting the following options:
 
 
 
-
-
 If `true` is passed in as the second parameter an array of webpack configs will be created, one for each of the growing number of asset variants required by next applications. To exclude certain variants (perhaps because your app takes care of building them itself) a `{exclude: []}` object can be passed in (see lib/variants.js for string values accepted in exclude)
