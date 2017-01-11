@@ -2,7 +2,7 @@
 Build the webpack.config.js of your dreams :relaxed:
 
 ```
-const nWebpack = require(@financial-times/n-webpack');
+const nWebpack = require('@financial-times/n-webpack');
 ```
 exports a function accepting the following options:
 
