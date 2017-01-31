@@ -5,11 +5,7 @@ const VerifyBuild = require('./lib/addons/verify-build');
 const variants = require('./lib/variants');
 const protips = require('protips');
 const protipsPaths = [path.join(__dirname, 'PROTIPS.md')];
-const nUiProtipsPath = path.join(process.cwd(), 'bower_components/n-ui', 'PROTIPS.md');
 const clone = require('clone');
-if (require('fs').existsSync(nUiProtipsPath)) {
-	protipsPaths.push(nUiProtipsPath);
-}
 
 protips.apply(protips, protipsPaths);
 
