@@ -12,7 +12,7 @@ exports a function accepting the following options:
 - `withHashedAssets`: default false - will build a map of hashes for each generated file
 - `withBabelPolyfills`: default true - Includes babel's core-js polyfills in your js bundle
 - `ECMAScriptVersion`: default 5 - ES version to compile down to
-- `withReact`: whether to proces bundle with babel-react etc. (if unspecified will try to guess from your package.json whether its' required)
+- `withReact`: whether to process bundle with babel-react etc. (if unspecified will try to guess from your package.json whether it's required)
 - `entry`: Object used to configure webpack's entry points
 - `includes|include`: Array of files/directories/globs to run babelifying over (in addition to ./client, ./shared, ./bower_components, which are included by default)
 - `excludes|exclude`: Array of files/directories/globs to exclude from babelification
