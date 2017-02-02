@@ -1,5 +1,3 @@
-'use strict';
-
 const VerifyBuild = require('./lib/addons/verify-build');
 const variants = require('./lib/variants');
 const clone = require('clone');
