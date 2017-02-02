@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 const VerifyBuild = require('./lib/addons/verify-build');
 const variants = require('./lib/variants');
