@@ -13,20 +13,20 @@ protips.apply(protips, protipsPaths);
 VerifyBuild.noWildcard();
 
 const transforms = [
-	require('./lib/transforms/tweak-options'),
-	require('./lib/transforms/dependencies'),
 	require('./lib/transforms/base'),
-	require('./lib/transforms/base-js'),
-	require('./lib/transforms/base-scss'),
 	require('./lib/transforms/apply-simple-options'),
-	require('./lib/transforms/babel'),
-	require('./lib/transforms/head-css'),
-	require('./lib/transforms/externals'),
-	require('./lib/transforms/prod'),
-	require('./lib/transforms/preact'),
-	require('./lib/transforms/wrap'),
-	require('./lib/transforms/verify'),
-	require('./lib/transforms/stats')
+	// require('./lib/transforms/tweak-options'),
+	// require('./lib/transforms/dependencies'),
+	// require('./lib/transforms/base-js'),
+	// require('./lib/transforms/base-scss'),
+	// require('./lib/transforms/babel'),
+	// require('./lib/transforms/head-css'),
+	// require('./lib/transforms/externals'),
+	// require('./lib/transforms/prod'),
+	// require('./lib/transforms/preact'),
+	// require('./lib/transforms/wrap'),
+	// require('./lib/transforms/verify'),
+	// require('./lib/transforms/stats')
 ];
 
 

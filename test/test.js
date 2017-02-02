@@ -1,14 +1,20 @@
 const assert = require('assert');
 const nUiWebpack = require('../index');
 
-describe('Webpack config', () => {
-  it('should do the thing', () => {
+describe('nUiWebpack', () => {
+	describe('apply-simple-options', () => {
 		let config = nUiWebpack({
-			entry:  {
-				'./public/main.js': './client/main.js',
-				'./public/main.css': './client/main.scss'
-			}
-		})
-		assert.equal(-1, config);
+			entry: 'a.js',
+			loaders: ['a','b','c','d']
+		});
+		it('should return the correct value for `entry` ', () => {
+			assert.strictEqual(config.entry,'a.js');
+		});
+		it('should return the correct value for `module.loaders` ', () => {
+			assert.strictEqual(config.module.loaders,new Array('a','b','c','d'));
+		});
+
+		console.log(JSON.stringify(config.module.loaders))
+
 	});
 });
