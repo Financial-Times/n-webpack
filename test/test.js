@@ -1,20 +1,21 @@
-const assert = require('assert');
+const expect = require('chai').expect;
 const nUiWebpack = require('../index');
 
 describe('nUiWebpack', () => {
 	describe('apply-simple-options', () => {
+		const loaders = ['a','b','c','d'];
 		let config = nUiWebpack({
 			entry: 'a.js',
-			loaders: ['a','b','c','d']
+			loaders: loaders
 		});
 		it('should return the correct value for `entry` ', () => {
-			assert.strictEqual(config.entry,'a.js');
+			expect(config.entry).to.equal('a.js');
 		});
 		it('should return the correct value for `module.loaders` ', () => {
-			assert.strictEqual(config.module.loaders,new Array('a','b','c','d'));
+			expect(config.module.loaders).to.deep.equal(loaders);
 		});
 
-		console.log(JSON.stringify(config.module.loaders))
+		// console.log(JSON.stringify(config))
 
 	});
 });
