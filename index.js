@@ -23,7 +23,7 @@ const transforms = [
 	require('./lib/transforms/babel'),
 	require('./lib/transforms/head-css'),
 	require('./lib/transforms/externals'),
-	// require('./lib/transforms/prod'),
+	require('./lib/transforms/prod'),
 	// require('./lib/transforms/preact'),
 	// require('./lib/transforms/wrap'),
 	// require('./lib/transforms/verify'),
