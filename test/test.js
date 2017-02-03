@@ -6,7 +6,8 @@ describe('nUiWebpack', () => {
 		entry: 'main.js',
 		withHeadCss: true,
 		handleReact: true,
-		usePreact: true
+		usePreact: true,
+		outputStats: 'myStatsFile.json'
 	});
 	it('should return correct values', () => {
 		expect(output.entry).to.be.a('string');

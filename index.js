@@ -27,7 +27,7 @@ const transforms = [
 	require('./lib/transforms/preact'),
 	require('./lib/transforms/wrap'),
 	require('./lib/transforms/verify'),
-	// require('./lib/transforms/stats')
+	require('./lib/transforms/stats')
 ];
 
 function construct (options) {
