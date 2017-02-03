@@ -18,8 +18,8 @@ VerifyBuild.noWildcard();
 const transforms = [
 	require('./lib/transforms/base'),
 	require('./lib/transforms/apply-simple-options'),
-	// require('./lib/transforms/base-js'),
-	// require('./lib/transforms/base-scss'),
+	require('./lib/transforms/base-js'),
+	require('./lib/transforms/base-scss'),
 	// require('./lib/transforms/babel'),
 	// require('./lib/transforms/head-css'),
 	// require('./lib/transforms/externals'),
