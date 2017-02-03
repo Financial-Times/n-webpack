@@ -25,7 +25,7 @@ const transforms = [
 	require('./lib/transforms/externals'),
 	require('./lib/transforms/prod'),
 	require('./lib/transforms/preact'),
-	// require('./lib/transforms/wrap'),
+	require('./lib/transforms/wrap'),
 	// require('./lib/transforms/verify'),
 	// require('./lib/transforms/stats')
 ];
