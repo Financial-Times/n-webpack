@@ -7,6 +7,7 @@ const protips = require('protips');
 const protipsPaths = [path.join(__dirname, 'PROTIPS.md')];
 const clone = require('clone');
 const tweakOptions = require('./lib/transforms/tweak-options');
+const checkDependencies = require('./lib/transforms/dependencies');
 
 protips.apply(protips, protipsPaths);
 
@@ -17,7 +18,6 @@ VerifyBuild.noWildcard();
 const transforms = [
 	require('./lib/transforms/base'),
 	require('./lib/transforms/apply-simple-options'),
-	// require('./lib/transforms/dependencies'),
 	// require('./lib/transforms/base-js'),
 	// require('./lib/transforms/base-scss'),
 	// require('./lib/transforms/babel'),
@@ -33,6 +33,7 @@ const transforms = [
 function construct (options) {
 	options = clone(options);
 	tweakOptions(options);
+	checkDependencies(options);
 	const output = {};
 	transforms.forEach(transform => {
 		transform(options, output);
