@@ -9,7 +9,7 @@ describe('nUiWebpack', () => {
 		usePreact: true,
 		outputStats: 'myStatsFile.json'
 	});
-	it('should return correct values', () => {
+	it('should generate a webpack configuration object with appropriate values', () => {
 		expect(output.entry).to.be.a('string');
 		expect(output.devtool).to.be.a('string');
 		expect(output.plugins).to.be.an('array');
