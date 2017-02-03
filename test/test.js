@@ -3,7 +3,8 @@ const nUiWebpack = require('../index');
 
 describe('nUiWebpack', () => {
 	let config = nUiWebpack({
-		entry: 'main.js'
+		entry: 'main.js',
+		withHeadCss: true
 	});
 	it('should return correct values', () => {
 		expect(config.entry).to.be.a('string');
