@@ -4,7 +4,9 @@ const nUiWebpack = require('../index');
 describe('nUiWebpack', () => {
 	let output = nUiWebpack({
 		entry: 'main.js',
-		withHeadCss: true
+		withHeadCss: true,
+		handleReact: true,
+		usePreact: true
 	});
 	it('should return correct values', () => {
 		expect(output.entry).to.be.a('string');
@@ -15,6 +17,7 @@ describe('nUiWebpack', () => {
 		expect(output.output.filename).to.be.a('string');
 		expect(output.module.loaders).to.be.an('array');
 		expect(output.resolve.root).to.be.an('array');
+		expect(output.resolve.alias).to.be.an('object');
 		expect(output.resolveLoader.alias).to.be.an('object');
 		expect(output.resolveLoader.alias.raw).to.be.a('string');
 		expect(output.resolveLoader.alias.imports).to.be.a('string');
