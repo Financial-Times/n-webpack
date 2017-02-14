@@ -1,13 +1,8 @@
 'use strict';
 
-const path = require('path');
 const VerifyBuild = require('./lib/addons/verify-build');
 const variants = require('./lib/variants');
-const protips = require('protips');
-const protipsPaths = [path.join(__dirname, 'PROTIPS.md')];
 const clone = require('clone');
-
-protips.apply(protips, protipsPaths);
 
 // verify no wildcards used in /public/ ignore patterns
 VerifyBuild.noWildcard();
