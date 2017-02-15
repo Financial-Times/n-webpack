@@ -1,17 +1,18 @@
 const VerifyBuild = require('./lib/addons/verify-build');
 const variants = require('./lib/variants');
 const clone = require('clone');
+const tweakOptions = require('./lib/transforms/tweak-options');
+const checkDependencies = require('./lib/transforms/dependencies');
 
 // verify no wildcards used in /public/ ignore patterns
 VerifyBuild.noWildcard();
 
+
 const transforms = [
-	require('./lib/transforms/tweak-options'),
-	require('./lib/transforms/dependencies'),
 	require('./lib/transforms/base'),
+	require('./lib/transforms/apply-simple-options'),
 	require('./lib/transforms/base-js'),
 	require('./lib/transforms/base-scss'),
-	require('./lib/transforms/apply-simple-options'),
 	require('./lib/transforms/babel'),
 	require('./lib/transforms/head-css'),
 	require('./lib/transforms/externals'),
@@ -22,9 +23,10 @@ const transforms = [
 	require('./lib/transforms/stats')
 ];
 
-
 function construct (options) {
 	options = clone(options);
+	tweakOptions(options);
+	checkDependencies(options);
 	const output = {};
 	transforms.forEach(transform => {
 		transform(options, output);
