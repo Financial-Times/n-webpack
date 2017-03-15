@@ -17,7 +17,7 @@ describe('nUiWebpack', () => {
 		expect(output.postcss).to.be.a('function');
 		expect(output.output.filename).to.be.a('string');
 		expect(output.module.loaders).to.be.an('array');
-		expect(output.resolve.root).to.be.an('array');
+		expect(output.resolve.modules).to.be.an('array');
 		expect(output.resolve.alias).to.be.an('object');
 		expect(output.resolveLoader.alias).to.be.an('object');
 		expect(output.resolveLoader.alias.raw).to.be.a('string');
