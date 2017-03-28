@@ -20,6 +20,7 @@ exports a function accepting the following options:
 - `wrap`: {before, after, options} strings to insert before and after the generated content. options is an optional object containing a regex `match` to select which output files to apply to
 - `env`: prod or dev, to force dev or prod build
 - `outputStats`: a filename to output stats about the build to
+- `babelPlugins`: an array of extra babel plugins to apply, e.g. `babelPlugins: ['transform-async-to-generator']`
 
 
 
