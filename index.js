@@ -1,12 +1,4 @@
-const VerifyBuild = require('./lib/addons/verify-build');
-const variants = require('./lib/variants');
 const clone = require('clone');
-const tweakOptions = require('./lib/transforms/tweak-options');
-const checkDependencies = require('./lib/transforms/dependencies');
-
-// verify no wildcards used in /public/ ignore patterns
-VerifyBuild.noWildcard();
-
 
 const transforms = [
 	require('./lib/transforms/base'),
@@ -14,30 +6,20 @@ const transforms = [
 	require('./lib/transforms/base-js'),
 	require('./lib/transforms/base-scss'),
 	require('./lib/transforms/babel'),
-	require('./lib/transforms/head-css'),
-	require('./lib/transforms/externals'),
-	require('./lib/transforms/prod'),
-	require('./lib/transforms/preact'),
-	require('./lib/transforms/wrap'),
-	require('./lib/transforms/verify'),
+	require('./lib/transforms/build-env'),
 	require('./lib/transforms/stats')
 ];
 
-function construct (options) {
+module.exports = (options) => {
 	options = clone(options);
-	tweakOptions(options);
-	checkDependencies(options);
+	options.ECMAScriptVersion = ('ECMAScriptVersion' in options) ? options.ECMAScriptVersion : 5;
 	const output = {};
 	transforms.forEach(transform => {
 		transform(options, output);
 	})
+	output.resolve.alias = output.resolve.alias = Object.assign(output.resolve.alias || {}, {
+		'react': 'preact-compat',
+		'react-dom': 'preact-compat'
+	});
 	return output;
-}
-
-module.exports = function buildConfig (options, buildVariants) {
-	if (buildVariants) {
-		return variants(options, buildVariants).map(options => construct(options));
-	} else {
-		return construct(options);
-	}
 }
