@@ -6,6 +6,7 @@ const transforms = [
 	require('./lib/transforms/base-js'),
 	require('./lib/transforms/base-scss'),
 	require('./lib/transforms/babel'),
+	require('./lib/transforms/build-env'),
 	require('./lib/transforms/stats')
 ];
 
