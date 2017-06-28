@@ -30,7 +30,8 @@
     "webpack-stats-plugin": "^0.1.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "precommit": "make verify && node_modules/.bin/secret-squirrel",
+    "prepush": "make unit-test"
   },
   "repository": {
     "type": "git",
@@ -44,6 +45,7 @@
   },
   "homepage": "https://github.com/Financial-Times/n-webpack#readme",
   "devDependencies": {
+    "@financial-times/n-gage": "^1.8.4",
     "chai": "^3.5.0",
     "eslint": "^2.12.0",
     "lintspaces-cli": "^0.3.0",
