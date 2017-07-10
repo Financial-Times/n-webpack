@@ -4,7 +4,7 @@ node_modules/@financial-times/n-gage/index.mk:
 
 -include node_modules/@financial-times/n-gage/index.mk
 
-test: verify test-unit
+test: verify unit-test
 
-test-unit:
+unit-test:
 	mocha

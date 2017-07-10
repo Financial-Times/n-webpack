@@ -16,10 +16,10 @@ module.exports = (options) => {
 	const output = {};
 	transforms.forEach(transform => {
 		transform(options, output);
-	})
+	});
 	output.resolve.alias = output.resolve.alias = Object.assign(output.resolve.alias || {}, {
 		'react': 'preact-compat',
 		'react-dom': 'preact-compat'
 	});
 	return output;
-}
+};
