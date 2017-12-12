@@ -1,4 +1,4 @@
-# n-webpack
+# n-webpack has been deprecated & is now archived
 Build the webpack.config.js of your dreams :relaxed:
 
 ```
